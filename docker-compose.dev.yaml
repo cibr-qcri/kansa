@@ -1,0 +1,66 @@
+#   port mappings
+#
+#   service         local -> host
+#   ------------------------------
+#   mongo           27017 -> 8383
+#   mongo-express   8081  -> 8382
+#   api             5000  -> 8381
+#   web             3000  -> 8380
+
+version: '3.3'
+services:
+  mongo:
+    image: mongo:5.0-focal
+    ports:
+      - '8383:27017'
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+    restart: 'no'
+  mongo-express:
+    image: mongo-express
+    ports:
+      - '8382:8081'
+    depends_on:
+      - mongo
+    restart: 'no'
+  api:
+    links:
+      - mongo
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./api:/app
+      - api-node-modules:/app/node_modules
+    environment:
+      NODE_ENV: 'developement'
+      HOST: '0.0.0.0'
+      PORT: 5000
+    ports:
+      - '8381:5000'
+    restart: 'no'
+  web:
+    depends_on:
+      - api
+    build:
+      context: ./web
+      dockerfile: Dockerfile.dev
+      args:
+        - REACT_APP_AMPLITUDE_API_KEY=${AMPLITUDE_DEV_API_KEY}
+    volumes:
+      - ./web:/app
+      - web-node-modules:/app/node_modules
+    environment:
+      NODE_ENV: 'developement'
+      WDS_SOCKET_PORT: 8380
+    ports:
+      - '8380:3000'
+    restart: 'no'
+    stdin_open: true
+
+volumes:
+  mongo-data:
+  mongo-config:
+  api-node-modules:
+  web-node-modules:
