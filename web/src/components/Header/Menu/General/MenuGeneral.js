@@ -1,15 +1,13 @@
-import React from 'react';
-
 import { NavLink } from 'react-router-dom';
-
+import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import {
-  Home as MainIcon,
   Input as LoginIcon,
+  Home as MainIcon,
   LibraryBooks as TermsIcon,
 } from '@mui/icons-material';
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 
 const MenuGeneral = (props) => {
   const { onClose } = props;
@@ -19,13 +17,7 @@ const MenuGeneral = (props) => {
 
   if (!isAuth) {
     loginItem = (
-      <ListItem
-        button
-        component={NavLink}
-        to="/signin"
-        rel="noopener"
-        onClick={onClose}
-      >
+      <ListItem button component={NavLink} to="/signin" rel="noopener" onClick={onClose}>
         <ListItemIcon>
           <LoginIcon />
         </ListItemIcon>
@@ -37,25 +29,13 @@ const MenuGeneral = (props) => {
   const view = (
     <div>
       <List>
-        <ListItem
-          button
-          component={NavLink}
-          to="/"
-          rel="noopener"
-          onClick={onClose}
-        >
+        <ListItem button component={NavLink} to="/" rel="noopener" onClick={onClose}>
           <ListItemIcon>
             <MainIcon />
           </ListItemIcon>
           <ListItemText primary="Main" />
         </ListItem>
-        <ListItem
-          button
-          component={NavLink}
-          to="/terms"
-          rel="noopener"
-          onClick={onClose}
-        >
+        <ListItem button component={NavLink} to="/terms" rel="noopener" onClick={onClose}>
           <ListItemIcon>
             <TermsIcon />
           </ListItemIcon>

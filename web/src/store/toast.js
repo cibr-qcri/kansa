@@ -15,7 +15,7 @@ const toastSlice = createSlice({
       state.severity = action.payload.severity;
       state.open = true;
     },
-    alertHidden: (state, action) => {
+    alertHidden: (state) => {
       state.open = false;
     },
   },

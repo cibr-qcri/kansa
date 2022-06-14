@@ -1,12 +1,8 @@
-// React
-import React, { Fragment, useState } from 'react';
-
-// Redux
-import { useSelector } from 'react-redux';
-
-// Router
-import { useLocation } from 'react-router-dom';
+/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
+
+import { useSelector } from 'react-redux';
+import React, { Fragment, useState } from 'react';
 
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { AppBar, IconButton, Toolbar } from '@mui/material';
@@ -33,15 +29,9 @@ const Header = () => {
         position="relative"
         enableColorOnDark
         elevation={0}
-        color="inherit"
-      >
+        color="inherit">
         <Toolbar sx={styles.toolbar}>
-          <IconButton
-            onClick={toggleMenuHandler}
-            edge="start"
-            color="primary"
-            aria-label="menu"
-          >
+          <IconButton onClick={toggleMenuHandler} edge="start" color="primary" aria-label="menu">
             <MenuIcon />
           </IconButton>
         </Toolbar>

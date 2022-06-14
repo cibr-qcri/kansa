@@ -1,17 +1,18 @@
-import React, { useEffect, Suspense, useCallback } from 'react';
+/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
+/** @jsxImportSource @emotion/react */
 
-import { Route, Navigate, Routes } from 'react-router-dom';
-
+import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { Suspense, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Main from '../Main';
 import Layout from '../Layout';
+import Main from '../Main';
 
-import { retrieveThemeMode, setThemeMode } from '../../store/theme';
 import { retrieveToken } from '../../store/auth';
+import { retrieveThemeMode, setThemeMode } from '../../store/theme';
 
 import LazyProgress from '../LazyProgress';
 
@@ -20,7 +21,7 @@ const App = () => {
   const isAuth = useSelector((state) => state.auth.token !== null);
   const isAuthInit = useSelector((state) => state.auth.isInit);
   const palette = useSelector((state) => state.theme.palette);
-  const theme = createTheme({ palette: palette });
+  const theme = createTheme({ palette });
 
   const handleThemeModeChange = useCallback(
     (event) => {

@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
-import React from 'react';
-
 import { NavLink } from 'react-router-dom';
-
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -15,8 +13,8 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
   ListItemSecondaryAction,
+  ListItemText,
   Switch,
 } from '@mui/material';
 
@@ -70,12 +68,7 @@ const MenuSettings = (props) => {
       </ListItemIcon>
       <ListItemText primary="Dark Mode" />
       <ListItemSecondaryAction>
-        <Switch
-          color="primary"
-          edge="end"
-          onChange={toggleDarkModeHandler}
-          checked={isDark}
-        />
+        <Switch color="primary" edge="end" onChange={toggleDarkModeHandler} checked={isDark} />
       </ListItemSecondaryAction>
     </ListItem>
   );

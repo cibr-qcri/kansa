@@ -12,7 +12,7 @@ const themeState = createSlice({
       state.palette = THEME.palettes[action.payload];
       localStorage.setItem('themeMode', action.payload);
     },
-    themeModeRetrieved: (state, action) => {
+    themeModeRetrieved: (state) => {
       const mode = localStorage.getItem('themeMode');
       if (mode) state.palette = THEME.palettes[mode];
     },

@@ -1,8 +1,8 @@
+/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
 
-import React from 'react';
-
 import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 import { Box, Link, Typography } from '@mui/material';
 

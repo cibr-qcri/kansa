@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
 
 import React from 'react';
@@ -14,11 +15,7 @@ export const LazyProgress = (props) => {
   const view = (
     <div css={containerStyle}>
       <CircularProgress />
-      <Typography
-        css={styles.loadingLabel}
-        variant="body2"
-        color="textSecondary"
-      >
+      <Typography css={styles.loadingLabel} variant="body2" color="textSecondary">
         Loading
       </Typography>
     </div>
