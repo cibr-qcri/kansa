@@ -2,7 +2,6 @@
 /** @jsxImportSource @emotion/react */
 
 import { NavLink } from 'react-router-dom';
-import React from 'react';
 
 import { Box, Link, Typography } from '@mui/material';
 
@@ -14,8 +13,11 @@ const Logo = () => {
   const view = (
     <Box css={styles.container}>
       <Link css={styles.link} component={NavLink} to="/" underline="none">
-        <Typography css={styles.logo}>Kansa</Typography>
+        <Typography css={styles.title}>Kansa</Typography>
       </Link>
+      <Typography css={styles.subtitle}>
+        The most advanced smart contract security profiler
+      </Typography>
     </Box>
   );
 

@@ -47,7 +47,7 @@ const App = () => {
   let routes = (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/" element={<Navigate replace to="/" />} />
+      <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
   );
 
@@ -55,7 +55,7 @@ const App = () => {
     routes = (
       <Routes>
         <Route path="/" component={<Main />} />
-        <Route path="/" element={<Navigate replace to="/" />} />
+        <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     );
   }

@@ -2,7 +2,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { useSelector } from 'react-redux';
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { AppBar, IconButton, Toolbar } from '@mui/material';

@@ -6,7 +6,6 @@ const useStyles = () => {
       display: flex;
       flex-direction: column;
       min-height: 100%;
-      text-align: center;
     `,
     subContainer: css`
       flex-grow: 1;

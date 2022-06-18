@@ -1,8 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
 /** @jsxImportSource @emotion/react */
 
-import React from 'react';
-
 import { Container } from '@mui/material';
 
 import Footer from '../Footer';
@@ -17,7 +15,7 @@ export const Layout = (props) => {
   const view = (
     <Container maxWidth="md" disableGutters css={styles.container}>
       <Header />
-      <div css={styles.subContainer}>{props.children}</div>
+      <Container css={styles.subContainer}>{props.children}</Container>
       <Footer />
       <Toast />
     </Container>

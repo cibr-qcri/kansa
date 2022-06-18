@@ -7,17 +7,21 @@ const useStyles = () => {
 
   return {
     container: css`
-      margin: ${theme.spacing(2)};
+      display: flex;
+      flex-direction: column;
+      margin-bottom: ${theme.spacing(2)};
+      text-align: left;
     `,
     link: css`
       '&:hover': {
         text-decoration: none;
       }
     `,
-    logo: css`
-      font-family: ubuntu;
-      line-height: 1px;
-      font-size: 30px;
+    title: css`
+      font-size: 60px;
+    `,
+    subtitle: css`
+      margin-top: ${theme.spacing(-1)};
     `,
   };
 };
