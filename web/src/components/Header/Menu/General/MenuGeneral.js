@@ -1,17 +1,24 @@
+// React
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+// Material
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import {
   Input as LoginIcon,
   Home as MainIcon,
   LibraryBooks as TermsIcon,
-} from '@mui/icons-material';
+} from '@material-ui/icons';
+
+// Styles
+import { useStyles } from './MenuGeneral-styles';
 
 const MenuGeneral = (props) => {
+  // Variables
+  const classes = useStyles();
   const { onClose } = props;
-  const isAuth = useSelector((state) => state.auth.token !== null);
+  const isAuth = useSelector((state) => state.auth.data.token !== null);
 
   let loginItem = null;
 
@@ -27,8 +34,8 @@ const MenuGeneral = (props) => {
   }
 
   const view = (
-    <div>
-      <List>
+    <div className={classes.root}>
+      <List className={classes.list}>
         <ListItem button component={NavLink} to="/" rel="noopener" onClick={onClose}>
           <ListItemIcon>
             <MainIcon />

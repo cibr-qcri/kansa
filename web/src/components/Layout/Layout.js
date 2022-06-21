@@ -1,21 +1,25 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
+// React
+import React from 'react';
 
-import { Container } from '@mui/material';
+// Material
+import { Container } from '@material-ui/core';
 
+// Components
 import Footer from '../Footer';
 import Header from '../Header';
-import Toast from '../Toast';
 
-import useStyles from './Layout-styles';
+// Styles
+import { Toast, useStyles } from './Layout-styles';
 
 export const Layout = (props) => {
-  const styles = useStyles();
+  // Variables
+  const classes = useStyles();
 
+  // JSX
   const view = (
-    <Container maxWidth="md" disableGutters css={styles.container}>
+    <Container className={classes.root} maxWidth="md" disableGutters>
       <Header />
-      <Container css={styles.subContainer}>{props.children}</Container>
+      <div className={classes.container}>{props.children}</div>
       <Footer />
       <Toast />
     </Container>

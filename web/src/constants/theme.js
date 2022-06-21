@@ -1,7 +1,7 @@
 const THEME = {
   palettes: {
     light: {
-      mode: 'light',
+      type: 'light',
       primary: {
         light: '#4791db',
         main: '#1976d2',
@@ -14,7 +14,7 @@ const THEME = {
       },
     },
     dark: {
-      mode: 'dark',
+      type: 'dark',
       primary: {
         light: '#a6d4fa',
         main: '#90caf9',

@@ -1,19 +1,28 @@
-import { css } from '@emotion/react';
+// Components
+import ToastRaw, { toastStyler } from '../ToastRaw';
 
-const useStyles = () => {
-  return {
-    container: css`
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-    `,
-    subContainer: css`
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    `,
-  };
-};
+// Utils
+import { makeStyles, withStyles } from '../../utils';
 
-export default useStyles;
+const stylesCreator = (theme) => ({
+  Default: {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100%',
+    },
+    container: {
+      flexGrow: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  ToastRaw: toastStyler(theme).Default,
+});
+
+// Local
+export const useStyles = makeStyles(stylesCreator);
+
+// HOCs
+export const Toast = withStyles(stylesCreator, ToastRaw);

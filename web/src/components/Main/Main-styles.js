@@ -1,29 +1,55 @@
-import { css } from '@emotion/react';
-import { useTheme } from '@mui/system';
+// Components
+import LogoRaw, { logoStyler } from '../LogoRaw';
+import SearchBoxRaw, { searchBoxStyler } from '../SearchBoxRaw';
+import StatRaw, { statStyler } from '../StatRaw';
 
-const useStyles = () => {
-  const theme = useTheme();
-  return {
-    container: css`
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      align-items: flex-start;
-      justify-content: center;
-    `,
-    searchBoxContainer: css`
-      width: 460px;
-      margin-bottom: ${theme.spacing(8)};
-    `,
-    subtitle: css`
-      margin-bottom: ${theme.spacing(4)};
-    `,
-    title: css`
-      margin-top: ${theme.spacing(2)};
-      text-align: left;
-    `,
-  };
-};
+// Utils
+import { makeStyles, withStyles } from '../../utils';
 
-export default useStyles;
+export const stylesCreator = (theme) => ({
+  Default: {
+    root: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 1,
+      alignItems: 'left',
+      justifyContent: 'center',
+    },
+    logo: {
+      marginTop: theme.spacing(8),
+    },
+    features: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+    },
+    otherFeatures: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  },
+  LogoRaw: {
+    ...logoStyler(theme).Default,
+    root: {
+      marginTop: theme.spacing(4),
+      padding: theme.spacing(2),
+      paddingBottom: theme.spacing(4),
+    },
+    link: {
+      '&:hover': {
+        textDecoration: 'none',
+      },
+    },
+  },
+  SearchBoxRaw: searchBoxStyler(theme).Default,
+  StatRaw: statStyler(theme).Default,
+});
+
+// Local
+export const useStyles = makeStyles(stylesCreator);
+
+// HOCs
+export const Logo = withStyles(stylesCreator, LogoRaw);
+export const SearchBox = withStyles(stylesCreator, SearchBoxRaw);
+export const Stat = withStyles(stylesCreator, StatRaw);

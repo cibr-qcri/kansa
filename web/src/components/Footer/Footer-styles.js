@@ -1,16 +1,18 @@
-import { css } from '@emotion/react';
-import { useTheme } from '@mui/system';
+// Utils
+import { makeStyles } from '../../utils';
 
-const useStyles = () => {
-  const theme = useTheme();
+export const stylesCreator = (theme) => ({
+  Default: {
+    root: {
+      textAlign: 'center',
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(0.75),
+      [theme.breakpoints.up('sm')]: {
+        marginBottom: theme.spacing(2.75),
+      },
+    },
+  },
+});
 
-  return {
-    container: css`
-      text-align: center;
-      margin-top: ${theme.spacing(2)};
-      margin-bottom: ${theme.spacing(0.75)};
-    `,
-  };
-};
-
-export default useStyles;
+// Local
+export const useStyles = makeStyles(stylesCreator);

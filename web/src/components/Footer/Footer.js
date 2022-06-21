@@ -1,19 +1,21 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
-
+// React
 import React from 'react';
 
-import { Container, Typography } from '@mui/material';
+// Material
+import { Typography } from '@material-ui/core';
 
-import useStyles from './Footer-styles';
+// Styles
+import { useStyles } from './Footer-styles';
 
 const Footer = () => {
-  const styles = useStyles();
+  // Variables
+  const classes = useStyles();
 
+  //JSX
   const view = (
-    <Container css={styles.container}>
+    <div className={classes.root}>
       <Typography variant="caption">&copy; 2022 CIBR &mdash; An initiative by QCRI</Typography>
-    </Container>
+    </div>
   );
 
   return view;
