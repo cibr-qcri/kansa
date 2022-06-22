@@ -1,0 +1,83 @@
+#   port mappings
+#
+#   service         local -> host
+#   ------------------------------
+#   proxy           80 -> 80
+
+version: '3.3'
+services:
+  proxy:
+    build:
+      context: ./proxy
+    links:
+      - web
+    ports:
+      - '80:80'
+    restart: always
+    stdin_open: true
+    tty: true
+  mongo:
+    image: mongo:5.0-focal
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+    restart: always
+    stdin_open: true
+    tty: true
+  api:
+    links:
+      - mongo
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    environment:
+      NODE_ENV: 'production'
+      HOST: '0.0.0.0'
+      PORT: 5000
+      RATE_LIMIT_WINDOW_MS: 60000
+      RATE_LIMIT_MAX: 100
+      RUN_JOBS_STARTUP: 'true'
+      MONGO_URI: 'mongodb://mongo:27017/kansa'
+      GP_HOST: '10.4.8.131'
+      GP_USER: 'gpadmin'
+      GP_DATABASE: 'eth_blockchain'
+      GP_PORT: 5432
+      GP_PASSWORD: ''
+      ARANGO_URL: 'http://10.4.8.131:8529'
+      ARANGO_DATABASE: 'eth_blockchain'
+      ARANGO_USER: 'root'
+      ARANGO_PASSWORD: ''
+      JWT_SECRET: 'UJl5Y8nK7b7TNjz8'
+      JWT_AUTH_EXPIRE_DAYS: '30d'
+      JWT_ACTIVATION_EXPIRE_DAYS: '3d'
+      JWT_COOKIE_EXPIRE_MS: 259200000
+      LOGOUT_COOKIE_EXPIRE_MS: 10000
+      RESET_PASSWORD_EXPIRE_MS: 600000
+      ACCOUNT_ACTIVIATION_URL: 'https://kansa.cibr.qcri.org/activate'
+      ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
+      SMTP_HOST: 'smtp.office365.com'
+      SMTP_PORT: 587
+      SMTP_EMAIL: 'noreply@mail.cibr.qcri.org'
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      FROM_EMAIL: 'noreply@mail.cibr.qcri.org'
+      FROM_NAME: 'Kansa'
+    restart: always
+    stdin_open: true
+    tty: true
+  web:
+    depends_on:
+      - api
+    build:
+      context: ./web
+      dockerfile: Dockerfile.prod
+      args:
+        - REACT_APP_AMPLITUDE_API_KEY=${AMPLITUDE_PROD_API_KEY}
+    environment:
+      NODE_ENV: 'production'
+    restart: always
+    stdin_open: true
+    tty: true
+
+volumes:
+  mongo-data:
+  mongo-config:

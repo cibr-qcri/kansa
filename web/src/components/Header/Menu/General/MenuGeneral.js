@@ -40,7 +40,7 @@ const MenuGeneral = (props) => {
           <ListItemIcon>
             <MainIcon />
           </ListItemIcon>
-          <ListItemText primary="Main" />
+          <ListItemText primary="Home" />
         </ListItem>
         <ListItem button component={NavLink} to="/terms" rel="noopener" onClick={onClose}>
           <ListItemIcon>

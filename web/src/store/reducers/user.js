@@ -7,7 +7,6 @@ import { updateObject } from '../../utils';
 // State
 const initialState = {
   data: {},
-  alerts: [],
   error: null,
   isBusy: false,
   signedUp: false,

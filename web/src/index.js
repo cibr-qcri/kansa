@@ -20,6 +20,7 @@ import AnalyticsProvider from './components/Analytics';
 
 // Reducers
 import authReducer from './store/reducers/auth';
+import dialogReducer from './store/reducers/dialog';
 import statsReducer from './store/reducers/stats';
 import themeReducer from './store/reducers/theme';
 import toastReducer from './store/reducers/toast';
@@ -39,6 +40,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  dialog: dialogReducer,
   stats: statsReducer,
   theme: themeReducer,
   toast: toastReducer,
