@@ -1,5 +1,6 @@
 const cron = require('node-cron');
 
+const computeStats = require('./computeStats');
 const deleteInactiveUsers = require('./deleteInactiveUsers');
 
 const runJobs = () => {
@@ -8,6 +9,7 @@ const runJobs = () => {
       deleteInactiveUsers();
     }
   } else {
+    computeStats();
     deleteInactiveUsers();
   }
 };
@@ -15,6 +17,7 @@ const runJobs = () => {
 const scheduleJobs = () => {
   if (process.env.NODE_ENV === 'production') {
     if (process.env.PM2_INSTANCE_ID === '0') {
+      cron.schedule('0 0 * * *', computeStats);
       cron.schedule('0 0 * * *', deleteInactiveUsers);
     }
   } else {

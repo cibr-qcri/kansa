@@ -12,7 +12,7 @@ import { Typography } from '@material-ui/core';
 
 const StatRaw = (props) => {
   // Variables
-  const { classes, value = 0, text } = props;
+  const { classes, value = 0, text, numeralFormat = '0.0a' } = props;
   const [animatedValue, setAnimatedValue] = useState(value);
 
   // Hooks
@@ -27,7 +27,7 @@ const StatRaw = (props) => {
   const view = (
     <div className={classes.root}>
       <Typography variant="h5" color="primary">
-        {animatedValue === 0 ? 'N/A' : numeral(animatedValue).format('0.0a')}
+        {animatedValue === 0 ? 'N/A' : numeral(animatedValue).format(numeralFormat)}
       </Typography>
       <Typography variant="body1">{text}</Typography>
     </div>
@@ -43,6 +43,7 @@ StatRaw.propTypes = {
   }),
   value: PropTypes.number,
   text: PropTypes.string.isRequired,
+  numeralFormat: PropTypes.string,
 };
 
 // Dynamic styling

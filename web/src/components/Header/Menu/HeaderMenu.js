@@ -1,6 +1,9 @@
 // React
 import React from 'react';
 
+// Redux
+import { useSelector } from 'react-redux';
+
 // Material
 import { Divider, Drawer, Typography } from '@material-ui/core';
 
@@ -17,6 +20,7 @@ const HeaderMenu = (props) => {
   // Variables
   const classes = useStyles();
   const { open, onClose, isAuth } = props;
+  const stats = useSelector((state) => state.stats.data.computed);
 
   //JSX
   const view = (
@@ -35,7 +39,7 @@ const HeaderMenu = (props) => {
         <Divider />
         <Outreach onClose={onClose} isAuth={isAuth} />
         <div className={classes.drawerNote}>
-          <Typography variant="caption">Updated to block {0}</Typography>
+          <Typography variant="caption">Updated to block {stats.count.block}</Typography>
         </div>
       </Drawer>
     </div>

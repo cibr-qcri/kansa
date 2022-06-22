@@ -23,6 +23,7 @@ const limiter = rateLimit({
 const auth = require('./routes/auth');
 const me = require('./routes/me');
 const password = require('./routes/password');
+const statistics = require('./routes/statistics');
 
 // Database
 connectDB();
@@ -50,6 +51,7 @@ if (process.env.NODE_ENV === 'developement') {
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/me', me);
 app.use('/api/v1/password', password);
+app.use('/api/v1/statistics', statistics);
 app.use(errorHandler);
 
 // Server

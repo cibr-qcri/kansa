@@ -20,7 +20,7 @@ import Layout from '../Layout';
 import Main from '../Main';
 
 // Store
-import { getThemeMode, getToken, setThemeMode } from '../../store/actions';
+import { getStats, getThemeMode, getToken, setThemeMode } from '../../store/actions';
 
 // Styles
 import { LazyProgress } from './App-styles';
@@ -53,6 +53,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getToken());
     dispatch(getThemeMode());
+    dispatch(getStats());
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', handleThemeModeChange);
@@ -66,18 +67,18 @@ const App = () => {
   // JSX
   let routes = (
     <Switch>
-      <Route from="/terms" component={lazyComp.Terms} />
-      <Route path="/" component={Main} />
-      <Redirect from="/" to="/" />
+      <Route path="/terms" component={lazyComp.Terms} />
+      <Route path="/" component={Main} exact />
+      <Redirect to="/" />
     </Switch>
   );
 
   if (isAuth) {
     routes = (
       <Switch>
-        <Route from="/terms" component={lazyComp.Terms} />
-        <Route path="/" component={Main} />
-        <Redirect from="/" to="/" />
+        <Route path="/terms" component={lazyComp.Terms} />
+        <Route path="/" component={Main} exact />
+        <Redirect to="/" />
       </Switch>
     );
   }

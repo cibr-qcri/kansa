@@ -1,6 +1,9 @@
 // React
 import React from 'react';
 
+// Redux
+import { useSelector } from 'react-redux';
+
 // Material
 import { Typography } from '@material-ui/core';
 
@@ -10,6 +13,7 @@ import { Stat, useStyles } from './Stats-styles';
 const MainStats = () => {
   // Variables
   const classes = useStyles();
+  const stats = useSelector((state) => state.stats.data.computed);
 
   // JSX
   const view = (
@@ -18,11 +22,11 @@ const MainStats = () => {
         Extended Coverage
       </Typography>
       <Typography className={classes.subtitle}>
-        Find what you are looking for on Ethereum
+        Find what you are looking for in Ethereum
       </Typography>
       <div className={classes.stats}>
-        <Stat value={0} text="Contracts" />
-        <Stat value={0} text="DeFi Protocols" />
+        <Stat value={stats.count.protocol} text="DeFi protocols" numeralFormat="0a" />
+        <Stat value={stats.count.contract} text="Smart contracts" />
       </div>
     </div>
   );

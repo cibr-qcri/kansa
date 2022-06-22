@@ -22,7 +22,7 @@ import { setRedirect } from '../../store/actions';
 
 const SearchBoxRaw = (props) => {
   // Variables
-  const { classes, placeholder = 'Enter txid, contract address, etc..' } = props;
+  const { classes, placeholder = 'Search Ethereum smart contracts' } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   const [query, setQuery] = useState('');

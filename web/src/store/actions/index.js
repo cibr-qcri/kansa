@@ -10,6 +10,9 @@ export {
 } from './auth/creators';
 export { createToken, getToken, deleteToken } from './auth/thunks';
 
+// Stats
+export { getStats } from './stats/thunks';
+
 // Theme
 export { getThemeMode, setThemeMode } from './theme/thunks';
 

@@ -15,15 +15,15 @@ const MainAnalytics = () => {
   const view = (
     <div className={classes.root}>
       <Typography className={classes.title} color="primary" variant="h5">
-        Smart Contract Analytics
+        Security Analytics
       </Typography>
       <Typography className={classes.subtitle}>
-        The most powerful security auditing tool for Ethereum
+        Get security audits with your search results
       </Typography>
       <div className={classes.features}>
-        <Feature iconLigature="bug_report" text="Vulnerability Scanning" />
-        <Feature iconLigature="code" text="Multiple Tools" />
-        <Feature iconLigature="assessment" text="Detailed Reporting" />
+        <Feature iconLigature="bug_report" text="Vulnerability detection" />
+        <Feature iconLigature="done_all" text="Multi-tools scanning" />
+        <Feature iconLigature="assessment" text="Detailed reporting" />
         <Feature iconLigature="offline_bolt" text="Activity monitoring" />
       </div>
     </div>
