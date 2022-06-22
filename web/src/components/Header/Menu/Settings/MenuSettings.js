@@ -1,34 +1,42 @@
-/** @jsxImportSource @emotion/react */
-
-import { NavLink } from 'react-router-dom';
+// React
 import React from 'react';
+
+// Router
+import { NavLink } from 'react-router-dom';
+
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 
+// Material
 import {
   AccountCircle as AccountIcon,
   Notifications as AlertIcon,
   Brightness4 as DarkModeIcon,
-} from '@mui/icons-material';
+} from '@material-ui/icons';
 import {
   List,
   ListItem,
   ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
+  ListSubheader,
   Switch,
-} from '@mui/material';
+} from '@material-ui/core';
 
-import { setThemeMode } from '../../../../store/theme';
+// Store
+import { setThemeMode } from '../../../../store/actions';
 
-import useStyles from './MenuSettings-styles';
+// Styles
+import { useStyles } from './MenuSettings-styles';
 
 const MenuSettings = (props) => {
-  const styles = useStyles();
+  // Variables
+  const classes = useStyles();
   const dispatch = useDispatch();
-
-  const isDark = useSelector((state) => state.theme.palette.mode === 'dark');
+  const isDark = useSelector((state) => state.theme.palette.type === 'dark');
   const { onClose, isAuth } = props;
 
+  // Handlers
   const toggleDarkModeHandler = (event) => {
     if (event.target.checked) {
       dispatch(setThemeMode('dark'));
@@ -36,6 +44,9 @@ const MenuSettings = (props) => {
       dispatch(setThemeMode('light'));
     }
   };
+
+  //JSX
+  const header = <ListSubheader className={classes.header}>Settings</ListSubheader>;
 
   let account = null;
   if (isAuth) {
@@ -74,8 +85,8 @@ const MenuSettings = (props) => {
   );
 
   const view = (
-    <div>
-      <List css={styles.list}>
+    <div className={classes.root}>
+      <List className={classes.list} subheader={header}>
         {account}
         {alerts}
         {darkMode}

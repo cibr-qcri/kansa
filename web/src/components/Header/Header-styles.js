@@ -1,30 +1,38 @@
-import { css } from '@emotion/react';
+// Components
+import LogoRaw, { logoStyler } from '../LogoRaw';
 
-import { useTheme } from '@mui/system';
+// Utils
+import { makeStyles, withStyles } from '../../utils';
 
-const useStyles = () => {
-  const theme = useTheme();
+export const stylesCreator = (theme) => ({
+  Default: {
+    root: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: theme.spacing(7),
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    toolbar: {
+      position: 'absolute',
+      left: 0,
+    },
+    link: {
+      textDecoration: 'none',
+    },
+  },
+  LogoRaw: {
+    ...logoStyler(theme).Default,
+    logo: {
+      ...logoStyler(theme).Default.logo,
+      fontSize: 26,
+    },
+  },
+});
 
-  return {
-    container: css`
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      min-height: 56px;
-      margin-top: ${theme.spacing(1)};
-      margin-bottom: ${theme.spacing(1)};
-    `,
-    toolbar: css`
-      position: absolute;
-      left: 0;
-    `,
-    link: css`
-      text-decoration: none;
-    `,
-    logo: css`
-      font-size: 26px;
-    `,
-  };
-};
+// Local
+export const useStyles = makeStyles(stylesCreator);
 
-export default useStyles;
+// HOCs
+export const Logo = withStyles(stylesCreator, LogoRaw);

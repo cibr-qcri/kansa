@@ -1,40 +1,46 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
-
-import { useSelector } from 'react-redux';
+// React
 import React, { Fragment, useState } from 'react';
 
-import { Menu as MenuIcon } from '@mui/icons-material';
-import { AppBar, IconButton, Toolbar } from '@mui/material';
+// Redux
+import { useSelector } from 'react-redux';
 
+// Router
+import { useLocation } from 'react-router-dom';
+
+// Material
+import { Menu as MenuIcon } from '@material-ui/icons';
+import { AppBar, IconButton, Toolbar } from '@material-ui/core';
+
+// Components
 import Menu from './Menu';
 
-import useStyles from './Header-styles';
+// Styles
+import { Logo, useStyles } from './Header-styles';
 
 const Header = () => {
-  const styles = useStyles();
-
+  // Variables
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const isAuth = useSelector((state) => state.auth.token !== null);
+  const location = useLocation();
+  const isAuth = useSelector((state) => state.auth.data.token !== null);
+  const showLogo = location.pathname !== '/';
 
+  // Handlers
   const toggleMenuHandler = () => {
     setOpen(!open);
   };
 
+  // JSX
   const view = (
     <Fragment>
       <Menu open={open} onClose={toggleMenuHandler} isAuth={isAuth} />
-      <AppBar
-        css={styles.container}
-        position="relative"
-        enableColorOnDark
-        elevation={0}
-        color="inherit">
-        <Toolbar sx={styles.toolbar}>
+      <AppBar className={classes.root} position="relative" color="transparent" elevation={0}>
+        <Toolbar className={classes.toolbar}>
           <IconButton onClick={toggleMenuHandler} edge="start" color="primary" aria-label="menu">
             <MenuIcon />
           </IconButton>
         </Toolbar>
+        {showLogo ? <Logo /> : null}
       </AppBar>
     </Fragment>
   );

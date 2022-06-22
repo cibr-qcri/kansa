@@ -1,30 +1,61 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+// React
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
-import { StyledEngineProvider } from '@mui/material/styles';
+// Router
+import { BrowserRouter } from 'react-router-dom';
 
-import reportWebVitals from './reportWebVitals';
+// Axios
+import axios from 'axios';
 
+// Redux
+import { Provider } from 'react-redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+
+// Redux-Thunk
+import thunk from 'redux-thunk';
+
+// Analytics
+import AnalyticsProvider from './components/Analytics';
+
+// Reducers
+import authReducer from './store/reducers/auth';
+import statsReducer from './store/reducers/stats';
+import themeReducer from './store/reducers/theme';
+import toastReducer from './store/reducers/toast';
+import userReducer from './store/reducers/user';
+
+// App
 import App from './components/App';
 
-import store from './store';
+axios.defaults.baseURL = 'https://kansa.cibr.qcri.org/api/v1';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+let composeEnhancers = compose;
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:8381/api/v1';
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  stats: statsReducer,
+  theme: themeReducer,
+  toast: toastReducer,
+  user: userReducer,
+});
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <StyledEngineProvider injectFirst>
+        <AnalyticsProvider devOptions={{ logToConsole: true }}>
           <App />
-        </StyledEngineProvider>
+        </AnalyticsProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

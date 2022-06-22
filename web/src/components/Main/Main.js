@@ -1,14 +1,32 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
-
+// React
 import React from 'react';
 
-import { Container } from '@mui/material';
+// Components
+import Analytics from './Analytics';
+import Stats from './Stats';
+import Tech from './Tech';
 
-import styles from './Main-styles';
+// Styles
+import { Logo, SearchBox, useStyles } from './Main-styles';
 
 export const Main = () => {
-  const view = <Container css={styles.container}>Hello World!</Container>;
+  // Variables
+  const classes = useStyles();
+
+  // JSX
+  const view = (
+    <div className={classes.root}>
+      <Logo />
+      <SearchBox />
+      <div className={classes.features}>
+        <Analytics />
+        <div className={classes.otherFeatures}>
+          <Stats />
+          <Tech />
+        </div>
+      </div>
+    </div>
+  );
 
   return view;
 };

@@ -1,28 +1,46 @@
-/* eslint-disable react/react-in-jsx-scope -- Unaware of jsxImportSource */
-/** @jsxImportSource @emotion/react */
+// React
+import React, { lazy, Suspense, useCallback, useEffect } from 'react';
 
-import { Navigate, Route, Routes } from 'react-router-dom';
-import React, { Suspense, useCallback, useEffect } from 'react';
+// Router
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// Material
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {
+  // Should be fixed in v5 release. See https://bit.ly/2Ali8Ak.
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 
+// Components
 import Layout from '../Layout';
 import Main from '../Main';
 
-import { retrieveToken } from '../../store/auth';
-import { retrieveThemeMode, setThemeMode } from '../../store/theme';
+// Store
+import { getStats, getThemeMode, getToken, setThemeMode } from '../../store/actions';
 
-import LazyProgress from '../LazyProgress';
+// Styles
+import { LazyProgress } from './App-styles';
+
+// Code Splitting
+const lazyComp = {
+  Terms: lazy(() => {
+    return import('../Terms');
+  }),
+};
 
 const App = () => {
+  // Variables
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.auth.token !== null);
+  const isAuth = useSelector((state) => state.auth.data.token !== null);
   const isAuthInit = useSelector((state) => state.auth.isInit);
   const palette = useSelector((state) => state.theme.palette);
-  const theme = createTheme({ palette });
+  const theme = createMuiTheme({ palette });
 
+  // Handlers
   const handleThemeModeChange = useCallback(
     (event) => {
       const theme = event.matches ? 'dark' : 'light';
@@ -31,9 +49,11 @@ const App = () => {
     [dispatch]
   );
 
+  // Hooks
   useEffect(() => {
-    dispatch(retrieveToken());
-    dispatch(retrieveThemeMode());
+    dispatch(getToken());
+    dispatch(getThemeMode());
+    dispatch(getStats());
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', handleThemeModeChange);
@@ -44,19 +64,22 @@ const App = () => {
     };
   }, [dispatch, handleThemeModeChange]);
 
+  // JSX
   let routes = (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/" element={<Navigate replace to="/" />} />
-    </Routes>
+    <Switch>
+      <Route path="/terms" component={lazyComp.Terms} />
+      <Route path="/" component={Main} exact />
+      <Redirect to="/" />
+    </Switch>
   );
 
   if (isAuth) {
     routes = (
-      <Routes>
-        <Route path="/" component={<Main />} />
-        <Route path="/" element={<Navigate replace to="/" />} />
-      </Routes>
+      <Switch>
+        <Route path="/terms" component={lazyComp.Terms} />
+        <Route path="/" component={Main} exact />
+        <Redirect to="/" />
+      </Switch>
     );
   }
 

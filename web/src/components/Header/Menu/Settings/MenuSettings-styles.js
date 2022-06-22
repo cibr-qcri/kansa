@@ -1,11 +1,17 @@
-import { css } from '@emotion/react';
+// Utils
+import { makeStyles } from '../../../../utils';
 
-const useStyles = () => {
-  return {
-    list: css`
-      width: 240px;
-    `,
-  };
-};
+export const stylesCreator = () => ({
+  Default: {
+    root: {},
+    header: {
+      textTransform: 'uppercase',
+    },
+    list: {
+      width: 240,
+    },
+  },
+});
 
-export default useStyles;
+// Local
+export const useStyles = makeStyles(stylesCreator);
