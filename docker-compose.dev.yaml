@@ -47,6 +47,19 @@ services:
       GP_DATABASE: 'eth_blockchain'
       GP_PORT: 5432
       GP_PASSWORD: ''
+      JWT_SECRET: 'UJl5Y8nK7b7TNjz8'
+      JWT_AUTH_EXPIRE_DAYS: '30d'
+      JWT_ACTIVATION_EXPIRE_DAYS: '3d'
+      JWT_COOKIE_EXPIRE_MS: 259200000
+      LOGOUT_COOKIE_EXPIRE_MS: 10000
+      RESET_PASSWORD_EXPIRE_MS: 600000
+      ACCOUNT_ACTIVIATION_URL: 'http://localhost:8380/activate'
+      SMTP_HOST: 'smtp.mailtrap.io'
+      SMTP_PORT: 2525
+      SMTP_EMAIL: '571098c753e080'
+      SMTP_PASSWORD: '79c540062fd5bb'
+      FROM_EMAIL: 'noreply@mail.cibr.qcri.org'
+      FROM_NAME: 'Kansa'
     ports:
       - '8381:5000'
     restart: 'no'
