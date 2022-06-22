@@ -30,6 +30,12 @@ const lazyComp = {
   Terms: lazy(() => {
     return import('../Terms');
   }),
+  Activate: lazy(() => {
+    return import('../Activate');
+  }),
+  SignUp: lazy(() => {
+    return import('../SignUp');
+  }),
 };
 
 const App = () => {
@@ -67,6 +73,8 @@ const App = () => {
   // JSX
   let routes = (
     <Switch>
+      <Route path="/activate/:token" component={lazyComp.Activate} />
+      <Route path="/signup" component={lazyComp.SignUp} />
       <Route path="/terms" component={lazyComp.Terms} />
       <Route path="/" component={Main} exact />
       <Redirect to="/" />
