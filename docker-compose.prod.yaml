@@ -2,17 +2,21 @@
 #
 #   service         local -> host
 #   ------------------------------
-#   proxy           80 -> 80
+#   proxy           80 -> 8280
 
 version: '3.3'
 services:
   proxy:
     build:
       context: ./proxy
+    depends_on:
+      - web
+      - api
     links:
       - web
+      - api
     ports:
-      - '80:80'
+      - '8280:80'
     restart: always
     stdin_open: true
     tty: true
@@ -25,6 +29,8 @@ services:
     stdin_open: true
     tty: true
   api:
+    depends_on:
+      - mongo
     links:
       - mongo
     build:
