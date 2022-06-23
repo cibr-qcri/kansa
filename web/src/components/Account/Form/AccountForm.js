@@ -5,32 +5,33 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Hook Form
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 // Schema
-import { signUpFormSchema } from './SignUpForm-schema';
+import { accountFormSchema } from './AccountForm-schema';
 
 // Material
 import { Paper, TextField } from '@material-ui/core';
 
 // Store
-import { createAccount } from '../../../store/actions';
+import { updateAccount } from '../../../store/actions';
 
 // Styles
-import { Button, useStyles } from './SignUpForm-styles';
+import { Button, useStyles } from './AccountForm-styles';
 
-const SignUpForm = () => {
+const AccountForm = (props) => {
   // Variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm({
-    validationSchema: signUpFormSchema,
+  const { firstName, lastName, organization } = props;
+  const { handleSubmit, errors, control } = useForm({
+    validationSchema: accountFormSchema,
   });
   const isBusy = useSelector((state) => state.user.isBusy);
 
   // Handlers
-  const signUpHandler = (data) => {
-    dispatch(createAccount(data));
+  const updateAccountHandler = (data) => {
+    dispatch(updateAccount(data));
   };
 
   // JSX
@@ -41,51 +42,39 @@ const SignUpForm = () => {
         component="form"
         autoComplete="off"
         variant="outlined"
-        onSubmit={handleSubmit(signUpHandler)}
+        onSubmit={handleSubmit(updateAccountHandler)}
         noValidate>
-        <TextField
+        <Controller
           className={classes.text}
-          inputRef={register}
+          as={<TextField />}
+          control={control}
+          defaultValue={firstName}
           error={!!errors.firstName}
           helperText={errors.firstName && errors.firstName.message}
           label="First Name"
           name="firstName"
         />
-        <TextField
+        <Controller
           className={classes.text}
-          inputRef={register}
+          as={<TextField />}
+          control={control}
+          defaultValue={lastName}
           error={!!errors.lastName}
           helperText={errors.lastName && errors.lastName.message}
           label="Last Name"
           name="lastName"
         />
-        <TextField
+        <Controller
           className={classes.text}
-          inputRef={register}
+          as={<TextField />}
+          control={control}
+          defaultValue={organization}
           error={!!errors.organization}
           helperText={errors.organization && errors.organization.message}
           label="Organization"
           name="organization"
         />
-        <TextField
-          className={classes.text}
-          inputRef={register}
-          error={!!errors.email}
-          helperText={errors.email && errors.email.message}
-          label="Email"
-          name="email"
-          type="email"
-        />
-        <TextField
-          className={classes.text}
-          inputRef={register}
-          error={!!errors.password}
-          helperText={errors.password && errors.password.message}
-          label="Password"
-          name="password"
-          type="password"
-        />
-        <Button title={'Sign up'} loading={isBusy} />
+        <Button title="Update" loading={isBusy} type="submit" />
       </Paper>
     </div>
   );
@@ -93,4 +82,4 @@ const SignUpForm = () => {
   return view;
 };
 
-export default SignUpForm;
+export default AccountForm;

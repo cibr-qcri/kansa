@@ -8,11 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Material
-import {
-  AccountCircle as AccountIcon,
-  Notifications as AlertIcon,
-  Brightness4 as DarkModeIcon,
-} from '@material-ui/icons';
+import { AccountCircle as AccountIcon, Brightness4 as DarkModeIcon } from '@material-ui/icons';
 import {
   List,
   ListItem,
@@ -60,18 +56,6 @@ const MenuSettings = (props) => {
     );
   }
 
-  let alerts = null;
-  if (isAuth) {
-    alerts = (
-      <ListItem button component={NavLink} to="/alerts" onClick={onClose}>
-        <ListItemIcon>
-          <AlertIcon />
-        </ListItemIcon>
-        <ListItemText primary="Alerts" />
-      </ListItem>
-    );
-  }
-
   const darkMode = (
     <ListItem>
       <ListItemIcon>
@@ -88,7 +72,6 @@ const MenuSettings = (props) => {
     <div className={classes.root}>
       <List className={classes.list} subheader={header}>
         {account}
-        {alerts}
         {darkMode}
       </List>
     </div>

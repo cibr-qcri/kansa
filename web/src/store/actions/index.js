@@ -19,6 +19,9 @@ export { getThemeMode, setThemeMode } from './theme/thunks';
 // Toast
 export { showAlert, hideAlert } from './toast/creators';
 
+// Dialog
+export { showPromptDialog, hidePromptDialog } from './dialog/creators';
+
 // User
 export { reset as resetUser, resetCreateAccount as resetUserSignUp } from './user/creators';
 export {

@@ -27,14 +27,20 @@ import { LazyProgress } from './App-styles';
 
 // Code Splitting
 const lazyComp = {
-  Terms: lazy(() => {
-    return import('../Terms');
+  Account: lazy(() => {
+    return import('../Account');
   }),
   Activate: lazy(() => {
     return import('../Activate');
   }),
   SignUp: lazy(() => {
     return import('../SignUp');
+  }),
+  SignIn: lazy(() => {
+    return import('../SignIn');
+  }),
+  Terms: lazy(() => {
+    return import('../Terms');
   }),
 };
 
@@ -73,6 +79,7 @@ const App = () => {
   // JSX
   let routes = (
     <Switch>
+      <Route path="/signin" component={lazyComp.SignIn} />
       <Route path="/activate/:token" component={lazyComp.Activate} />
       <Route path="/signup" component={lazyComp.SignUp} />
       <Route path="/terms" component={lazyComp.Terms} />
@@ -84,6 +91,7 @@ const App = () => {
   if (isAuth) {
     routes = (
       <Switch>
+        <Route path="/account" component={lazyComp.Account} />
         <Route path="/terms" component={lazyComp.Terms} />
         <Route path="/" component={Main} exact />
         <Redirect to="/" />

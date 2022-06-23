@@ -2,45 +2,47 @@
 #
 #   service         local -> host
 #   ------------------------------
-#   mongo           27017 -> 8283
-#   mongo-express   8081  -> 8282
-#   api             5000  -> 8281
-#   web             3000  -> 8280
+#   proxy           80 -> 8280
 
 version: '3.3'
 services:
+  proxy:
+    build:
+      context: ./proxy
+    depends_on:
+      - web
+      - api
+    links:
+      - web
+      - api
+    ports:
+      - '8280:80'
+    restart: always
+    stdin_open: true
+    tty: true
   mongo:
     image: mongo:5.0-focal
-    ports:
-      - '8283:27017'
     volumes:
       - mongo-data:/data/db
       - mongo-config:/data/configdb
-    restart: 'no'
-  mongo-express:
-    image: mongo-express
-    ports:
-      - '8282:8081'
+    restart: always
+    stdin_open: true
+    tty: true
+  api:
     depends_on:
       - mongo
-    restart: 'no'
-  api:
     links:
       - mongo
     build:
       context: ./api
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./api:/app
-      - api-node-modules:/app/node_modules
+      dockerfile: Dockerfile.prod
     environment:
-      NODE_ENV: 'developement'
+      NODE_ENV: 'production'
       HOST: '0.0.0.0'
       PORT: 5000
       RATE_LIMIT_WINDOW_MS: 60000
       RATE_LIMIT_MAX: 100
       RUN_JOBS_STARTUP: 'true'
-      ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
       MONGO_URI: 'mongodb://mongo:27017/kansa'
       GP_HOST: '10.4.8.131'
       GP_USER: 'gpadmin'
@@ -53,36 +55,31 @@ services:
       JWT_COOKIE_EXPIRE_MS: 259200000
       LOGOUT_COOKIE_EXPIRE_MS: 10000
       RESET_PASSWORD_EXPIRE_MS: 600000
-      ACCOUNT_ACTIVIATION_URL: 'http://localhost:8280/activate'
-      SMTP_HOST: 'smtp.mailtrap.io'
-      SMTP_PORT: 2525
-      SMTP_EMAIL: '571098c753e080'
-      SMTP_PASSWORD: '79c540062fd5bb'
+      ACCOUNT_ACTIVIATION_URL: 'https://kansa.cibr.qcri.org/activate'
+      ACCOUNT_ACTIVIATION_EXPIRE_MS: 259200000
+      SMTP_HOST: 'smtp.office365.com'
+      SMTP_PORT: 587
+      SMTP_EMAIL: 'noreply@mail.cibr.qcri.org'
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
       FROM_EMAIL: 'noreply@mail.cibr.qcri.org'
       FROM_NAME: 'Kansa'
-    ports:
-      - '8281:5000'
-    restart: 'no'
+    restart: always
+    stdin_open: true
+    tty: true
   web:
     depends_on:
       - api
     build:
       context: ./web
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
       args:
-        - REACT_APP_AMPLITUDE_API_KEY=${AMPLITUDE_DEV_API_KEY}
-    volumes:
-      - ./web:/app
-      - web-node-modules:/app/node_modules
+        - REACT_APP_AMPLITUDE_API_KEY=${AMPLITUDE_PROD_API_KEY}
     environment:
-      NODE_ENV: 'developement'
-    ports:
-      - '8280:3000'
-    restart: 'no'
+      NODE_ENV: 'production'
+    restart: always
     stdin_open: true
+    tty: true
 
 volumes:
   mongo-data:
   mongo-config:
-  api-node-modules:
-  web-node-modules:

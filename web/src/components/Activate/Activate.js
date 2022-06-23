@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 
 // Router
-import { useParams, Redirect } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
